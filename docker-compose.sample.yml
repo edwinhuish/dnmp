@@ -36,6 +36,8 @@ services:
     container_name: php
     expose:
       - 9501
+    extra_hosts:
+      - "www.site1.com:172.17.0.1"
     volumes:
       - ${SOURCE_DIR}:/www/:rw
       - ${PHP_PHP_CONF_FILE}:/usr/local/etc/php/php.ini:ro
@@ -131,7 +133,9 @@ services:
 #    volumes:
 #       - ${SOURCE_DIR}:/www/:rw
 #       - ${OPENRESTY_CONFD_DIR}:/etc/nginx/conf.d/:ro
+#       - ${OPENRESTY_SSL_CERTIFICATE_DIR}:/ssl:rw
 #       - ${OPENRESTY_CONF_FILE}:/usr/local/openresty/nginx/conf/nginx.conf:ro
+#       - ${OPENRESTY_FASTCGI_PHP_CONF}:/usr/local/openresty/nginx/conf/fastcgi-php.conf:ro
 #       - ${OPENRESTY_CONF_FASTCGIPARAMS_FILE}:/usr/local/openresty/nginx/conf/fastcgi_params:ro
 #       - ${OPENRESTY_LOG_DIR}:/var/log/nginx/:rw
 #    environment:
@@ -146,6 +150,7 @@ services:
 #      - "${REDIS_HOST_PORT}:6379"
 #    volumes:
 #      - ${REDIS_CONF_FILE}:/etc/redis.conf:ro
+#      - ${DATA_DIR}/redis:/data/:rw
 #    restart: always
 #    entrypoint: ["redis-server", "/etc/redis.conf"]
 #    environment:
@@ -213,7 +218,7 @@ services:
 #        TZ: "$TZ"
 #    volumes:
 #      - ${DATA_DIR}/mongo:/data/db:rw
-#      - ${MONGODB_DATA_DIR}/mongo_key:/mongo:rw
+#      - ${DATA_DIR}/mongo_key:/mongo:rw
 #    ports:
 #       - "${MONGODB_HOST_PORT}:27017"
 #    networks:

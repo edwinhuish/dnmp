@@ -22,7 +22,7 @@ RUN apk --no-cache add tzdata \
 
 
 # Fix: https://github.com/docker-library/php/issues/240
-RUN apk add gnu-libiconv --no-cache --repository http://${CONTAINER_PACKAGE_URL}/alpine/edge/community/ --allow-untrusted
+RUN apk add gnu-libiconv libstdc++ --no-cache --repository http://${CONTAINER_PACKAGE_URL}/alpine/edge/community/ --allow-untrusted
 ENV LD_PRELOAD /usr/lib/preloadable_libiconv.so php
 
 
@@ -34,8 +34,6 @@ ENV COMPOSER_HOME=/tmp/composer
 
 # php image's www-data user uid & gid are 82, change them to 1000 (primary user)
 RUN apk --no-cache add shadow && usermod -u 1000 www-data && groupmod -g 1000 www-data
-# Use www-data to run the first process
-USER www-data
 
 
 WORKDIR /www
