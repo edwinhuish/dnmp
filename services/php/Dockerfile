@@ -32,6 +32,10 @@ RUN curl -o /usr/bin/composer https://mirrors.aliyun.com/composer/composer.phar 
 ENV COMPOSER_HOME=/tmp/composer
 ENV PATH="/tmp/composer/vendor/bin:${PATH}"
 
+RUN apk --no-cache add git
+
+RUN mv /etc/ssl/cert.pem /etc/ssl/cert.pem.bak
+RUN curl -o /etc/ssl/cert.pem http://curl.haxx.se/ca/cacert.pem
 
 # php image's www-data user uid & gid are 82, change them to 1000 (primary user)
 RUN apk --no-cache add shadow && usermod -u 1000 www-data && groupmod -g 1000 www-data
