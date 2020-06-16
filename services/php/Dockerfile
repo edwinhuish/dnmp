@@ -33,6 +33,13 @@ ENV COMPOSER_HOME=/tmp/composer
 
 RUN apk --no-cache add git
 
+#Download the desired package(s)
+RUN curl -o /tmp/msodbcsql17_amd64.apk https://download.microsoft.com/download/e/4/e/e4e67866-dffd-428c-aac7-8d28ddafb39b/msodbcsql17_17.5.2.1-1_amd64.apk
+RUN curl -o /tmp/mssql-tools_amd64.apk https://download.microsoft.com/download/e/4/e/e4e67866-dffd-428c-aac7-8d28ddafb39b/mssql-tools_17.5.2.1-1_amd64.apk
+
+RUN apk add --allow-untrusted /tmp/msodbcsql17_amd64.apk
+RUN apk add --allow-untrusted /tmp/mssql-tools_amd64.apk
+
 # php image's www-data user uid & gid are 82, change them to 1000 (primary user)
 RUN apk --no-cache add shadow && usermod -u 1000 www-data && groupmod -g 1000 www-data
 
